@@ -1,49 +1,37 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, MemoryRouter, Routes, Route, Navigate, Link } from "react-router-dom";
-import { AuthProvider, RequireFamilia } from "./lib/auth.jsx";
-import { CentroProvider } from "./lib/centro.jsx";
-import { Cargando } from "./components/ui.jsx";
-import Shell from "./components/Shell.jsx";
-import Entrada from "./pages/Entrada.jsx";
-import Login from "./pages/Login.jsx";
-import Inicio from "./pages/Inicio.jsx";
-import Progreso from "./pages/Progreso.jsx";
-import Mensajes from "./pages/Mensajes.jsx";
-import Centro, { Noticia } from "./pages/Centro.jsx";
-import Perfil from "./pages/Perfil.jsx";
-import Panel from "./pages/Panel.jsx";
+import { BrowserRouter, MemoryRouter, Routes, Route } from "react-router-dom";
+import { AuthFamiliaProvider, RequireFamilia } from "./lib/authFamilia.jsx";
+import LayoutFamilia from "./components/LayoutFamilia.jsx";
+import FamiliaLogin from "./pages/FamiliaLogin.jsx";
+import FamiliaInicio from "./pages/FamiliaInicio.jsx";
 import "./styles.css";
 
-/* familias.kinima.uy/<centro>/...  → cada centro tiene su propio espacio dentro de la misma app. */
+/* En la web publicada (familias.kinima.uy) se usa BrowserRouter. La vista previa usa MemoryRouter. */
 const Router = import.meta.env.VITE_PREVIEW ? MemoryRouter : BrowserRouter;
-const NoCentro = () => <div className="screen entrada"><div className="entrada-in"><h1>No encontramos ese centro</h1><p className="muted">Revisá el link que te pasó tu centro.</p><Link className="btn btn-navy" to="/">Volver</Link></div></div>;
+
+/* App instalable (PWA): el manifest va acá (no en un <script> suelto de index.html) porque el CSP
+   del backend solo permite scripts propios del bundle. */
+const link = document.createElement("link");
+link.rel = "manifest";
+link.href = "/manifest-familia.webmanifest";
+document.head.appendChild(link);
+document.head.insertAdjacentHTML(
+  "beforeend",
+  '<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Kinima">'
+);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
+    <AuthFamiliaProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Entrada />} />
-          <Route path="/:centro/*" element={
-            <CentroProvider fallback={<Cargando />} error={() => <NoCentro />}>
-              <Routes>
-                <Route index element={<Login />} />
-                <Route path="panel" element={<Panel />} />
-                <Route element={<RequireFamilia><Shell /></RequireFamilia>}>
-                  <Route path="inicio" element={<Inicio />} />
-                  <Route path="progreso" element={<Progreso />} />
-                  <Route path="mensajes" element={<Mensajes />} />
-                  <Route path="centro" element={<Centro />} />
-                  <Route path="centro/noticias/:id" element={<Noticia />} />
-                  <Route path="perfil" element={<Perfil />} />
-                  <Route path="*" element={<Navigate to="inicio" replace />} />
-                </Route>
-              </Routes>
-            </CentroProvider>
-          } />
+          <Route path="/ingresar" element={<FamiliaLogin />} />
+          <Route element={<RequireFamilia><LayoutFamilia /></RequireFamilia>}>
+            <Route path="/" element={<FamiliaInicio />} />
+          </Route>
         </Routes>
       </Router>
-    </AuthProvider>
+    </AuthFamiliaProvider>
   </StrictMode>
 );
