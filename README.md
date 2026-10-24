@@ -36,3 +36,4 @@ Dirección prevista: **familias.kinima.uy/<centro>** (por ejemplo `familias.kini
 - Tabla `centros` (slug, nombre, logo, tema, bienvenida, módulos, info de contacto).
 - Todas las demás tablas (familias, pacientes, profesionales, noticias, eventos, recursos, mensajes) llevan `centro_id`.
 - La API filtra **siempre** por el centro de quien está logueado: una familia o un profesional nunca ven datos de otro centro.
+
