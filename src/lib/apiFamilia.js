@@ -50,3 +50,15 @@ export async function getSesiones(patientId, limit = 50) {
   const { sessions } = await req(`/patients/${patientId}/sessions?limit=${limit}`);
   return sessions;
 }
+export async function getMensajes(patientId) {
+  const { messages } = await req(`/patients/${patientId}/messages`);
+  return messages.map((m) => ({ id: m.id, de: m.de, texto: m.texto, fecha: m.fecha, leido: m.leido, autor: m.autor }));
+}
+export async function enviarMensaje(patientId, texto) {
+  const { mensaje } = await req(`/patients/${patientId}/messages`, { method: "POST", body: { texto } });
+  return { id: mensaje.id, de: mensaje.de, texto: mensaje.texto, fecha: mensaje.fecha, leido: mensaje.leido, autor: mensaje.autor };
+}
+export async function marcarLeidos(patientId) {
+  await req(`/patients/${patientId}/messages/read`, { method: "POST" });
+  return { ok: true };
+}
