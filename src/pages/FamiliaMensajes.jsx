@@ -16,6 +16,12 @@ function Hilo({ patient, onLeido }) {
       apiFamilia.marcarLeidos(patient.id).then(onLeido);
     }
   }, [mensajes, patient.id]);
+  // Sondea cada pocos segundos mientras el chat está abierto, para que los mensajes que
+  // manda el equipo profesional aparezcan solos, sin tener que recargar la página.
+  useEffect(() => {
+    const intervalo = setInterval(() => { reload(); }, 4000);
+    return () => clearInterval(intervalo);
+  }, [reload]);
 
   if (loading && !mensajes) return <Loading />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
