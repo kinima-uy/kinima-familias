@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Logo, K_PATH, COLORS } from "../lib/brand.jsx";
 import { useAuthFamilia } from "../lib/authFamilia.jsx";
 import { Icon } from "../components/ui.jsx";
@@ -65,6 +65,7 @@ export default function FamiliaLogin() {
         <button className="btn-grad" disabled={cargando}>{cargando ? "Ingresando…" : <>Ingresar <Icon name="flecha" size={18} /></>}</button>
         <p className="familia-hint">¿No tenés contraseña todavía? Pedísela al profesional que atiende a tu hijo o hija.</p>
         <p className="familia-foot"><Icon name="candado" size={14} />Conexión segura · Acceso solo para familias autorizadas</p>
+        <Link to="/centro-admin/ingresar" className="familia-staff-link">¿Trabajás en el centro y publicás noticias o actividades? Entrá acá</Link>
       </form>
     </div>
   );

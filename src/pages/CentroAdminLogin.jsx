@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Logo, K_PATH, COLORS } from "../lib/brand.jsx";
 import { useAuthCentroAdmin } from "../lib/authCentroAdmin.jsx";
 import { Icon } from "../components/ui.jsx";
@@ -64,6 +64,7 @@ export default function CentroAdminLogin() {
         <button className="btn-grad" disabled={cargando}>{cargando ? "Ingresando…" : <>Ingresar <Icon name="flecha" size={18} /></>}</button>
         <p className="familia-hint">¿No tenés cuenta todavía? Pedísela al administrador del centro en Kinima.</p>
         <p className="familia-foot"><Icon name="candado" size={14} />Conexión segura · Acceso solo para cuentas de centro</p>
+        <Link to="/ingresar" className="familia-staff-link">¿Sos familia de un paciente? Entrá por acá</Link>
       </form>
     </div>
   );
