@@ -602,8 +602,25 @@ main:focus,main:focus-visible{outline:none}
 
 /* selector de hijos/as: pastillas grandes, no tabs de portal */
 .familia-tabs{display:flex;gap:10px;flex-wrap:wrap}
-.familia-tabs button{border:2px solid var(--line);background:var(--white);color:var(--navy);border-radius:999px;padding:10px 20px;font-weight:800;cursor:pointer;min-height:46px}
+.familia-tabs button{display:inline-flex;align-items:center;border:2px solid var(--line);background:var(--white);color:var(--navy);border-radius:999px;padding:10px 20px;font-weight:800;cursor:pointer;min-height:46px}
 .familia-tabs button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:var(--cream)}
+.familia-tabs button .badge{margin-left:8px}
+.familia-tabs-top{max-width:720px;margin:0 auto;padding:14px clamp(16px,4vw,40px) 0;position:sticky;top:0;z-index:15}
+
+/* barra de navegación inferior: Inicio / Mensajes (y lo que se sume después) */
+.familia-nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;gap:4px;background:rgba(247,245,239,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right))}
+.familia-nav a{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;max-width:160px;padding:6px 10px;border-radius:14px;color:var(--muted);text-decoration:none;font-size:12px;font-weight:700}
+.familia-nav a.active{color:var(--navy);background:var(--tint-teal)}
+.familia-nav-badge{position:absolute;top:0;right:18%;min-width:16px;height:16px;font-size:10px;padding:0 4px;margin-left:0}
+
+.centro-bienvenida{background:var(--tint-teal);color:var(--tealtx);border-radius:16px;padding:14px 18px;font-weight:600;margin:0}
+.centro-noticias{display:flex;flex-direction:column;gap:12px}
+.centro-noticia{background:var(--white);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow)}
+.centro-noticia-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.centro-noticia h3{margin:0 0 4px;font:600 18px var(--display)}
+.centro-noticia p{margin:0 0 8px;font-size:14px;line-height:1.5}
+.centro-contacto{background:var(--white);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px}
+.centro-contacto p{margin:0}
 
 /* tarjeta "hoy toca": la rutina, grande y con forma de la K de fondo */
 .f-hero{position:relative;overflow:hidden;border-radius:28px;padding:30px 28px;color:var(--navy);box-shadow:var(--shadow)}
@@ -629,3 +646,24 @@ main:focus,main:focus-visible{outline:none}
 .f-aciertos{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:800}
 .f-aciertos small{font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase}
 .f-estado{flex:none}
+
+
+/* ---------- panel del centro (cuenta de administración de centro) ---------- */
+.panel-screen{max-width:1080px;margin:0 auto;padding:24px clamp(16px,4vw,40px) 64px;display:flex;flex-direction:column;gap:20px}
+.panel-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.panel-tag{flex:1;font-weight:800;color:var(--tealtx)}
+.panel-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media (min-width:860px){.panel-grid{grid-template-columns:1fr 1fr;align-items:start}}
+.panel-col{display:flex;flex-direction:column;gap:20px}
+.card.stack{display:flex;flex-direction:column;gap:14px}
+.card-h{font:600 18px var(--display);margin:0}
+.card .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.chk{display:inline-flex;align-items:center;gap:8px;font-weight:700;min-height:50px}
+.temas{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:4px}
+.temas label{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;cursor:pointer;border:2px solid var(--line);border-radius:999px;padding:6px 12px}
+.temas label.on{border-color:var(--navy)}
+.temas input{position:absolute;opacity:0;width:0;height:0}
+.admin-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.admin-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.admin-list li span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.admin-list li small{color:var(--muted)}

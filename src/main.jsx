@@ -2,9 +2,15 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, MemoryRouter, Routes, Route } from "react-router-dom";
 import { AuthFamiliaProvider, RequireFamilia } from "./lib/authFamilia.jsx";
+import { AuthCentroAdminProvider, RequireCentroAdmin } from "./lib/authCentroAdmin.jsx";
+import { PacienteProvider } from "./lib/paciente.jsx";
 import LayoutFamilia from "./components/LayoutFamilia.jsx";
 import FamiliaLogin from "./pages/FamiliaLogin.jsx";
 import FamiliaInicio from "./pages/FamiliaInicio.jsx";
+import FamiliaMensajes from "./pages/FamiliaMensajes.jsx";
+import FamiliaCentro from "./pages/FamiliaCentro.jsx";
+import CentroAdminLogin from "./pages/CentroAdminLogin.jsx";
+import CentroAdminPanel from "./pages/CentroAdminPanel.jsx";
 import "./styles.css";
 
 /* En la web publicada (familias.kinima.uy) se usa BrowserRouter. La vista previa usa MemoryRouter. */
@@ -24,14 +30,20 @@ document.head.insertAdjacentHTML(
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthFamiliaProvider>
-      <Router>
-        <Routes>
-          <Route path="/ingresar" element={<FamiliaLogin />} />
-          <Route element={<RequireFamilia><LayoutFamilia /></RequireFamilia>}>
-            <Route path="/" element={<FamiliaInicio />} />
-          </Route>
-        </Routes>
-      </Router>
+      <AuthCentroAdminProvider>
+        <Router>
+          <Routes>
+            <Route path="/ingresar" element={<FamiliaLogin />} />
+            <Route element={<RequireFamilia><PacienteProvider><LayoutFamilia /></PacienteProvider></RequireFamilia>}>
+              <Route path="/" element={<FamiliaInicio />} />
+              <Route path="/mensajes" element={<FamiliaMensajes />} />
+              <Route path="/centro" element={<FamiliaCentro />} />
+            </Route>
+            <Route path="/centro-admin/ingresar" element={<CentroAdminLogin />} />
+            <Route path="/centro-admin" element={<RequireCentroAdmin><CentroAdminPanel /></RequireCentroAdmin>} />
+          </Routes>
+        </Router>
+      </AuthCentroAdminProvider>
     </AuthFamiliaProvider>
   </StrictMode>
 );

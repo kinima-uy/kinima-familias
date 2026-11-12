@@ -40,7 +40,7 @@ export const hayToken = () => !!token;
 
 export async function getPacientes() {
   const { patients } = await req("/patients");
-  return patients.map((p) => ({ id: p.id, codigo: p.localCode, etiqueta: p.displayLabel }));
+  return patients.map((p) => ({ id: p.id, codigo: p.localCode, etiqueta: p.displayLabel, sinLeer: p.sinLeer || 0 }));
 }
 export async function getAsignacion(patientId) {
   const { assignment } = await req(`/patients/${patientId}/assignment`);
@@ -61,4 +61,14 @@ export async function enviarMensaje(patientId, texto) {
 export async function marcarLeidos(patientId) {
   await req(`/patients/${patientId}/messages/read`, { method: "POST" });
   return { ok: true };
+}
+export async function getCentro(patientId) {
+  const { centro, noticias, eventos } = await req(`/patients/${patientId}/centro`);
+  return {
+    slug: centro.slug, nombre: centro.nombre, nombreCorto: centro.nombreCorto, tema: centro.tema,
+    logoUrl: centro.logoUrl, ciudad: centro.ciudad, bienvenida: centro.bienvenida, direccion: centro.direccion,
+    horarios: centro.horarios, telefono: centro.telefono, whatsapp: centro.whatsapp, emailContacto: centro.emailContacto,
+    noticias: noticias.map((n) => ({ id: n.id, etiqueta: n.etiqueta, titulo: n.titulo, cuerpo: n.cuerpo, fijada: n.fijada, fecha: n.fecha })),
+    eventos: eventos.map((e) => ({ id: e.id, titulo: e.titulo, lugar: e.lugar, detalle: e.detalle, fecha: e.fecha })),
+  };
 }

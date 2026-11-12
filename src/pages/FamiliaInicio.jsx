@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
 import * as apiFamilia from "../lib/apiFamilia.js";
 import { useAuthFamilia } from "../lib/authFamilia.jsx";
+import { usePaciente } from "../lib/paciente.jsx";
 import { duracionTexto } from "../data/ejercicios.js";
 import { K_PATH, COLORS } from "../lib/brand.jsx";
 import { fecha, useData } from "../lib/util.js";
@@ -109,29 +109,18 @@ function Hijo({ patient, acento }) {
 
 export default function FamiliaInicio() {
   const { familia } = useAuthFamilia();
-  const { data: pacientes, error, loading } = useData(() => apiFamilia.getPacientes(), []);
-  const [actual, setActual] = useState(null);
-  useEffect(() => { if (pacientes?.length && !actual) setActual(pacientes[0].id); }, [pacientes, actual]);
+  const { pacientes, paciente, actual, loading, error } = usePaciente();
 
   const idx = pacientes?.findIndex((p) => p.id === actual) ?? -1;
-  const paciente = useMemo(() => pacientes?.find((p) => p.id === actual) || null, [pacientes, actual]);
   const acento = ACENTOS[Math.max(0, idx) % ACENTOS.length];
 
   return (
     <>
       <p className="familia-saludo"><span>Hola</span>{familia.displayName} 👋</p>
 
-      {loading && <Loading />}
+      {loading && !pacientes && <Loading />}
       {error && <ErrorBox error={error} />}
       {!loading && !error && !pacientes?.length && <Empty icon="pacientes" title="Todavía no tenés ningún paciente vinculado">Pedile al profesional que te comparta el acceso.</Empty>}
-
-      {pacientes?.length > 1 && (
-        <div className="familia-tabs" role="tablist" aria-label="Pacientes">
-          {pacientes.map((p) => (
-            <button key={p.id} role="tab" aria-selected={actual === p.id} onClick={() => setActual(p.id)}>{p.etiqueta}</button>
-          ))}
-        </div>
-      )}
 
       {paciente && <Hijo key={paciente.id} patient={paciente} acento={acento} />}
     </>
