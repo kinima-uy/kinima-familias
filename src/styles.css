@@ -411,10 +411,10 @@ select:focus{outline:none;border-color:var(--teal)}
 .chat-card{display:flex;flex-direction:column}
 .chat{list-style:none;margin:0;padding:4px;display:flex;flex-direction:column;gap:12px;max-height:380px;overflow-y:auto;flex:1}
 .chat li{display:flex;flex-direction:column;max-width:85%}
-.chat li.profesional{align-self:flex-end;align-items:flex-end}
+.chat li.familia{align-self:flex-end;align-items:flex-end}
 .chat li.end{max-width:none;height:1px}
 .bubble{background:var(--cream);border-radius:18px 18px 18px 4px;padding:10px 14px}
-.chat li.profesional .bubble{background:var(--navy);color:var(--cream);border-radius:18px 18px 4px 18px}
+.chat li.familia .bubble{background:var(--navy);color:var(--cream);border-radius:18px 18px 4px 18px}
 .chat small{color:var(--muted);font-size:12px;margin-top:4px}
 .composer{display:flex;gap:8px;align-items:flex-end;margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
 .composer textarea{flex:1;resize:none;background:var(--cream)}
