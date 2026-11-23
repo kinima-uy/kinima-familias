@@ -615,13 +615,21 @@ main:focus,main:focus-visible{outline:none}
 .familia-nav-badge{position:absolute;top:0;right:18%;min-width:16px;height:16px;font-size:10px;padding:0 4px;margin-left:0}
 
 .centro-bienvenida{background:var(--tint-teal);color:var(--tealtx);border-radius:16px;padding:14px 18px;font-weight:600;margin:0}
+.eyebrow-hijo{font-size:14px}
 .centro-noticias{display:flex;flex-direction:column;gap:12px}
-.centro-noticia{background:var(--white);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow)}
+.centro-noticia{background:var(--white);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
+.centro-noticia-ico{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center}
+.centro-noticia-ico.tono-coral{background:var(--tint-coral);color:var(--coraltx)}
+.centro-noticia-ico.tono-teal{background:var(--tint-teal);color:var(--tealtx)}
+.centro-noticia-ico.tono-yellow{background:var(--tint-yellow);color:var(--yellowtx)}
+.centro-noticia-body{flex:1;min-width:0}
 .centro-noticia-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.centro-noticia h3{margin:0 0 4px;font:600 18px var(--display)}
-.centro-noticia p{margin:0 0 8px;font-size:14px;line-height:1.5}
+.centro-noticia h3{margin:0 0 4px;font:600 20px var(--display)}
+.centro-noticia p{margin:0 0 8px;font-size:15px;line-height:1.5}
+.pill-fijada{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;color:var(--coraltx)}
+.centro-para-vos{margin-top:4px;opacity:.92}
 .centro-contacto{background:var(--white);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px}
-.centro-contacto p{margin:0}
+.centro-contacto p{margin:0;display:flex;align-items:center;gap:8px;font-size:14px}
 
 /* tarjeta "hoy toca": la rutina, grande y con forma de la K de fondo */
 .f-hero{position:relative;overflow:hidden;border-radius:28px;padding:30px 28px;color:var(--navy);box-shadow:var(--shadow)}
@@ -668,3 +676,25 @@ main:focus,main:focus-visible{outline:none}
 .admin-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .admin-list li span{display:flex;flex-direction:column;gap:2px;min-width:0}
 .admin-list li small{color:var(--muted)}
+
+/* ---------- ayuda / tutoriales (botón flotante, app de familias) ---------- */
+.ayuda-fab{position:fixed;right:16px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:30;width:52px;height:52px;border-radius:50%;border:0;background:var(--navy);color:var(--cream);box-shadow:0 10px 24px rgba(25,50,74,.28);display:grid;place-items:center;cursor:pointer}
+.ayuda-fab:hover{background:#0F2236}
+.ayuda-overlay{position:fixed;inset:0;z-index:50;background:rgba(25,50,74,.4);display:flex;align-items:flex-end;justify-content:center}
+.ayuda-sheet{background:var(--cream);width:100%;max-width:480px;max-height:85vh;border-radius:24px 24px 0 0;padding:18px 20px calc(20px + env(safe-area-inset-bottom));overflow-y:auto;box-shadow:0 -10px 30px rgba(25,50,74,.2)}
+.ayuda-sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ayuda-lista{display:flex;flex-direction:column;gap:8px}
+.ayuda-item{display:flex;align-items:center;gap:12px;background:var(--white);border:0;border-radius:16px;padding:12px 14px;box-shadow:var(--shadow);cursor:pointer;text-align:left;width:100%}
+.ayuda-ico{flex:none;width:36px;height:36px;border-radius:10px;background:var(--tint-teal);color:var(--tealtx);display:grid;place-items:center}
+.ayuda-item-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ayuda-item-txt b{font-size:15px}
+.ayuda-item-txt small{color:var(--muted);font-size:12.5px}
+.ayuda-volver{display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:var(--tealtx);font-weight:800;padding:4px 0;margin-bottom:8px;cursor:pointer}
+.ayuda-detalle-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ayuda-ico-grande{flex:none;width:46px;height:46px;border-radius:14px;background:var(--tint-teal);color:var(--tealtx);display:grid;place-items:center}
+.ayuda-pasos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.ayuda-pasos li{display:flex;gap:12px;align-items:flex-start}
+.ayuda-paso-num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--navy);color:var(--cream);font:800 13px var(--body);display:grid;place-items:center}
+.ayuda-paso-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.ayuda-paso-body p{font-size:14px;color:var(--muted);line-height:1.45}
+.ayuda-foto-slot{display:flex;align-items:center;gap:8px;border:2px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--muted);margin-top:2px}

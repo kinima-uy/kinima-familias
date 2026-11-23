@@ -3,6 +3,7 @@ import { Logo } from "../lib/brand.jsx";
 import { useAuthFamilia } from "../lib/authFamilia.jsx";
 import { usePaciente } from "../lib/paciente.jsx";
 import { Icon } from "./ui.jsx";
+import Ayuda from "./Ayuda.jsx";
 
 /* Selector de hijo/a: solo aparece si la familia tiene más de uno vinculado. Vive acá (no en
    cada página) para que el hijo elegido se mantenga al cambiar de Inicio a Mensajes. */
@@ -52,6 +53,7 @@ export default function LayoutFamilia() {
           <span>Centro</span>
         </NavLink>
       </nav>
+      <Ayuda />
     </div>
   );
 }
