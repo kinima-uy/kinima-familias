@@ -4,6 +4,7 @@ import { useAuthFamilia } from "../lib/authFamilia.jsx";
 import { usePaciente } from "../lib/paciente.jsx";
 import { Icon } from "./ui.jsx";
 import Ayuda from "./Ayuda.jsx";
+import Notificaciones from "./Notificaciones.jsx";
 
 /* Selector de hijo/a: solo aparece si la familia tiene más de uno vinculado. Vive acá (no en
    cada página) para que el hijo elegido se mantenga al cambiar de Inicio a Mensajes. */
@@ -32,6 +33,7 @@ export default function LayoutFamilia() {
       <header className="topbar">
         <Logo height={24} />
         <span className="sb-tag">App para familias</span>
+        <Notificaciones />
         <button className="icon-btn" onClick={salir} aria-label="Cerrar sesión" title="Cerrar sesión"><Icon name="salir" /></button>
       </header>
       <SelectorHijos />

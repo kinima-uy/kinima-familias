@@ -597,6 +597,8 @@ main:focus,main:focus-visible{outline:none}
 .app-familia .topbar{display:flex!important;align-items:center;gap:12px;position:sticky;top:0;z-index:20;background:rgba(247,245,239,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 20px}
 .app-familia .topbar .sb-tag{flex:1}
 .app-familia .topbar .icon-btn{flex:none}
+.notif-toggle{position:relative;flex:none}
+.notif-toggle-error{position:absolute;top:100%;right:0;margin-top:6px;z-index:30;background:var(--navy);color:var(--cream);font-size:12px;font-weight:600;padding:8px 12px;border-radius:10px;max-width:220px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
 .familia-main{max-width:720px;margin:0 auto;padding:32px clamp(16px,4vw,40px) 72px;display:flex;flex-direction:column;gap:22px;position:relative}
 .familia-saludo{font:600 28px var(--display);margin:0}
 .familia-saludo span{display:block;font:700 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--tealtx);margin-bottom:4px}

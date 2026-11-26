@@ -1,6 +1,7 @@
 /* Íconos MingCute (https://www.mingcute.com/, licencia Apache 2.0): familia iconográfica oficial de Kinima.
    Generado con solo los íconos que se usan. Para sumar uno: buscalo en mingcute.com y agregalo al mapa. */
 export const MINGCUTE = {
+  "campana": ["M5 9a7 7 0 0 1 14 0v3.764l1.822 3.644A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592L5 12.764zm5.268 9a2 2 0 0 0 3.464 0zM12 4a5 5 0 0 0-5 5v3.764a2 2 0 0 1-.211.894L5.619 16h12.763l-1.17-2.342a2 2 0 0 1-.212-.894V9a5 5 0 0 0-5-5"],
   "noticia": ["M4 4a1 1 0 0 1 1-1h13a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H9.414l-3.707 3.707A1 1 0 0 1 4 21zm2 1v13.586L7.293 16.293A1 1 0 0 1 8 16h10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1zm2 3a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1m0 4a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1"],
   "casa": ["M12.707 2.293a1 1 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13h1v7a2 2 0 0 0 2 2h4a1 1 0 0 0 1-1v-5a1 1 0 1 1 2 0v5a1 1 0 0 0 1 1h4a2 2 0 0 0 2-2v-7h1a1 1 0 0 0 .707-1.707z"],
   "perfil": ["M12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6M12 13c4.418 0 8 2.686 8 6v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1c0-3.314 3.582-6 8-6m0 2c-3.528 0-6 2.077-6 4h12c0-1.923-2.472-4-6-4"],

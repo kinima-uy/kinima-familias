@@ -27,6 +27,18 @@ document.head.insertAdjacentHTML(
   '<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Kinima">'
 );
 
+/* Service worker: habilita la instalación como PWA y las notificaciones push (ver
+   src/lib/push.js y public/sw.js). En la vista previa (sin dominio propio) no hay beneficio y
+   algunos entornos de preview no sirven /sw.js, así que solo se registra en la web publicada. */
+if ("serviceWorker" in navigator && !import.meta.env.VITE_PREVIEW) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {
+      /* si falla (navegador viejo, http sin TLS en desarrollo), la app sigue funcionando igual,
+         solo sin notificaciones push ni instalación */
+    });
+  });
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthFamiliaProvider>

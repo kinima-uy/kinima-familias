@@ -62,6 +62,18 @@ export async function marcarLeidos(patientId) {
   await req(`/patients/${patientId}/messages/read`, { method: "POST" });
   return { ok: true };
 }
+/* Notificaciones push (ver src/lib/push.js para el flujo completo de suscripción). */
+export async function getPushPublicKey() {
+  const res = await fetch((["localhost", "127.0.0.1"].includes(location.hostname) ? "/api/v1" : "https://api.kinima.uy/api/v1") + "/push/public-key");
+  return res.json();
+}
+export async function suscribirPush(subscription) {
+  return req("/push/subscribe", { method: "POST", body: subscription });
+}
+export async function cancelarPush(endpoint) {
+  return req("/push/subscribe", { method: "DELETE", body: { endpoint } });
+}
+
 export async function getCentro(patientId) {
   const { centro, noticias, eventos } = await req(`/patients/${patientId}/centro`);
   return {
