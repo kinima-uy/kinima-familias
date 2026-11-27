@@ -39,7 +39,7 @@ export const hayToken = () => !!token;
 export async function getCentro() {
   const { centro, noticias, eventos } = await req("/centro");
   return {
-    nombre: centro.nombre, nombreCorto: centro.nombreCorto, tema: centro.tema, bienvenida: centro.bienvenida,
+    nombre: centro.nombre, nombreCorto: centro.nombreCorto, tema: centro.tema, bienvenida: centro.bienvenida, logoUrl: centro.logoUrl || null,
     ciudad: centro.ciudad, direccion: centro.direccion, horarios: centro.horarios, telefono: centro.telefono,
     whatsapp: centro.whatsapp, emailContacto: centro.emailContacto,
     noticias: noticias.map((n) => ({ id: n.id, etiqueta: n.etiqueta, titulo: n.titulo, cuerpo: n.cuerpo, fijada: n.fijada, fecha: n.fecha })),

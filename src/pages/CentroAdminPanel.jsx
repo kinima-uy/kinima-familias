@@ -15,6 +15,70 @@ function isoLocal(date) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+/* Achica la imagen en el navegador antes de subirla (máximo 512 px del lado más largo), así el
+   logo pesa poco y carga rápido en la app de las familias. */
+function achicarImagen(file, max = 512) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const escala = Math.min(1, max / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * escala); canvas.height = Math.round(img.height * escala);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      let data = canvas.toDataURL("image/webp", 0.9);
+      if (!data.startsWith("data:image/webp")) data = canvas.toDataURL("image/png");
+      resolve(data);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("No pudimos leer esa imagen. Probá con un PNG o JPG.")); };
+    img.src = url;
+  });
+}
+
+function LogoCentroAdmin({ centro, onGuardado }) {
+  const [subiendo, setSubiendo] = useState(false);
+  const [guardado, setGuardado] = useState(false);
+  const [error, setError] = useState("");
+  const t = TEMAS[centro.tema] || TEMAS.teal;
+  const iniciales = (centro.nombreCorto || centro.nombre || "").split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
+
+  const guardar = async (logoUrl) => {
+    setSubiendo(true); setError("");
+    try { await apiCentroAdmin.actualizarCentro({ logoUrl }); setGuardado(true); setTimeout(() => setGuardado(false), 2200); onGuardado(); }
+    catch (err) { setError(err.message || "No se pudo guardar el logo."); }
+    finally { setSubiendo(false); }
+  };
+  const elegir = async (e) => {
+    const file = e.target.files?.[0]; e.target.value = "";
+    if (!file) return;
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) { setError("El logo tiene que ser una imagen PNG, JPG o WebP."); return; }
+    try { await guardar(await achicarImagen(file)); }
+    catch (err) { setError(err.message); }
+  };
+
+  return (
+    <div className="stack">
+      <h2 className="card-h">Logo</h2>
+      <div className="logo-admin">
+        {centro.logoUrl
+          ? <img className="logo-admin-img" src={centro.logoUrl} alt={`Logo de ${centro.nombre}`} />
+          : <span className="logo-admin-img logo-admin-vacio" style={{ background: t.acc, color: centro.tema === "amarillo" ? "#19324A" : "#fff" }} aria-hidden="true">{iniciales}</span>}
+        <div className="logo-admin-acciones">
+          <label className={`btn btn-line sm ${subiendo ? "is-disabled" : ""}`}>
+            {centro.logoUrl ? "Cambiar logo" : "Subir logo"}
+            <input type="file" accept="image/png,image/jpeg,image/webp" onChange={elegir} disabled={subiendo} hidden />
+          </label>
+          {centro.logoUrl && <button type="button" className="link-btn" onClick={() => guardar(null)} disabled={subiendo}>Quitar</button>}
+          {guardado && <span className="saved"><Icon name="ok" size={16} />Guardado</span>}
+        </div>
+      </div>
+      <p className="muted small">PNG, JPG o WebP. Mejor si es cuadrado y con fondo. Lo ven las familias en la sección de su centro.</p>
+      {error && <p className="form-error" role="alert"><Icon name="alerta" size={16} />{error}</p>}
+    </div>
+  );
+}
+
 function FormCentro({ centro, onGuardado }) {
   const [f, setF] = useState({
     nombre: centro.nombre, nombreCorto: centro.nombreCorto, tema: centro.tema, bienvenida: centro.bienvenida || "",
@@ -33,6 +97,7 @@ function FormCentro({ centro, onGuardado }) {
 
   return (
     <form className="card stack" onSubmit={guardar}>
+      <LogoCentroAdmin centro={centro} onGuardado={onGuardado} />
       <h2 className="card-h">Identidad del centro</h2>
       <label className="field"><span>Nombre</span><input value={f.nombre} onChange={(e) => setF({ ...f, nombre: e.target.value })} /></label>
       <label className="field"><span>Nombre corto</span><input value={f.nombreCorto} maxLength={40} onChange={(e) => setF({ ...f, nombreCorto: e.target.value })} /></label>

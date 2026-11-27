@@ -51,7 +51,10 @@ export default function FamiliaCentro() {
 
   return (
     <>
-      <p className="familia-saludo"><span>Tu centro</span>{centro.nombre}</p>
+      <div className="centro-cabecera">
+        {centro.logoUrl && <img className="centro-logo" src={centro.logoUrl} alt={`Logo de ${centro.nombre}`} />}
+        <p className="familia-saludo"><span>Tu centro</span>{centro.nombre}</p>
+      </div>
       {centro.bienvenida && <p className="centro-bienvenida">{centro.bienvenida}</p>}
 
       {/* "Para contarle a tu hijo/a": lo que la familia comparte o explica al niño/a — noticias y próximos eventos,
