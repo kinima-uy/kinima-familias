@@ -22,10 +22,12 @@ function FormCentro({ centro, onGuardado }) {
   });
   const [guardando, setGuardando] = useState(false);
   const [guardado, setGuardado] = useState(false);
+  const [error, setError] = useState("");
 
   const guardar = async (e) => {
-    e.preventDefault(); setGuardando(true);
+    e.preventDefault(); setGuardando(true); setError("");
     try { await apiCentroAdmin.actualizarCentro(f); setGuardado(true); setTimeout(() => setGuardado(false), 2200); onGuardado(); }
+    catch (err) { setError(err.message || "No se pudo guardar."); }
     finally { setGuardando(false); }
   };
 
@@ -51,6 +53,7 @@ function FormCentro({ centro, onGuardado }) {
       <label className="field"><span>Teléfono</span><input value={f.telefono} onChange={(e) => setF({ ...f, telefono: e.target.value })} /></label>
       <label className="field"><span>WhatsApp</span><input value={f.whatsapp} onChange={(e) => setF({ ...f, whatsapp: e.target.value })} /></label>
       <label className="field"><span>Mail de contacto</span><input type="email" value={f.emailContacto} onChange={(e) => setF({ ...f, emailContacto: e.target.value })} /></label>
+      {error && <p className="form-error" role="alert"><Icon name="alerta" size={16} />{error}</p>}
       <div className="row-end">{guardado && <span className="saved"><Icon name="ok" size={16} />Guardado</span>}<button className="btn btn-navy sm" disabled={guardando}>Guardar cambios</button></div>
     </form>
   );
@@ -60,14 +63,16 @@ function PanelNoticias({ noticias, onCambio }) {
   const [n, setN] = useState({ titulo: "", cuerpo: "", etiqueta: "Aviso", fijada: false });
   const [pub, setPub] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState("");
 
   const publicar = async (e) => {
     e.preventDefault(); if (!n.titulo.trim() || !n.cuerpo.trim()) return;
-    setEnviando(true);
+    setEnviando(true); setError("");
     try { await apiCentroAdmin.publicarNoticia(n); setPub(true); setTimeout(() => setPub(false), 2200); setN({ titulo: "", cuerpo: "", etiqueta: "Aviso", fijada: false }); await onCambio(); }
+    catch (err) { setError(err.message || "No se pudo publicar."); }
     finally { setEnviando(false); }
   };
-  const borrar = async (id) => { await apiCentroAdmin.borrarNoticia(id); await onCambio(); };
+  const borrar = async (id) => { try { await apiCentroAdmin.borrarNoticia(id); await onCambio(); } catch (err) { setError(err.message || "No se pudo borrar."); } };
 
   return (
     <form className="card stack" onSubmit={publicar}>
@@ -78,6 +83,7 @@ function PanelNoticias({ noticias, onCambio }) {
         <label className="field"><span>Etiqueta</span><select value={n.etiqueta} onChange={(e) => setN({ ...n, etiqueta: e.target.value })}>{ETIQUETAS.map((x) => <option key={x}>{x}</option>)}</select></label>
         <label className="field"><span>&nbsp;</span><label className="chk"><input type="checkbox" checked={n.fijada} onChange={(e) => setN({ ...n, fijada: e.target.checked })} />Destacar</label></label>
       </div>
+      {error && <p className="form-error" role="alert"><Icon name="alerta" size={16} />{error}</p>}
       <div className="row-end">{pub && <span className="saved"><Icon name="ok" size={16} />Publicada</span>}<button className="btn btn-navy sm" disabled={!n.titulo.trim() || !n.cuerpo.trim() || enviando}>Publicar</button></div>
       <ul className="admin-list">
         {!noticias.length && <li className="muted small">Todavía no publicaste ninguna noticia.</li>}
@@ -96,14 +102,16 @@ function PanelEventos({ eventos, onCambio }) {
   const [e, setE] = useState({ titulo: "", lugar: "", detalle: "", fecha: "" });
   const [creado, setCreado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState("");
 
   const crear = async (ev) => {
     ev.preventDefault(); if (!e.titulo.trim() || !e.fecha) return;
-    setEnviando(true);
+    setEnviando(true); setError("");
     try { await apiCentroAdmin.crearEvento({ ...e, fecha: new Date(e.fecha).toISOString() }); setCreado(true); setTimeout(() => setCreado(false), 2200); setE({ titulo: "", lugar: "", detalle: "", fecha: "" }); await onCambio(); }
+    catch (err) { setError(err.message || "No se pudo crear el evento."); }
     finally { setEnviando(false); }
   };
-  const borrar = async (id) => { await apiCentroAdmin.borrarEvento(id); await onCambio(); };
+  const borrar = async (id) => { try { await apiCentroAdmin.borrarEvento(id); await onCambio(); } catch (err) { setError(err.message || "No se pudo borrar."); } };
 
   return (
     <form className="card stack" onSubmit={crear}>
@@ -114,6 +122,7 @@ function PanelEventos({ eventos, onCambio }) {
         <label className="field"><span>Lugar</span><input value={e.lugar} onChange={(ev) => setE({ ...e, lugar: ev.target.value })} /></label>
       </div>
       <label className="field"><span>Detalle (opcional)</span><textarea rows="2" value={e.detalle} onChange={(ev) => setE({ ...e, detalle: ev.target.value })} /></label>
+      {error && <p className="form-error" role="alert"><Icon name="alerta" size={16} />{error}</p>}
       <div className="row-end">{creado && <span className="saved"><Icon name="ok" size={16} />Creado</span>}<button className="btn btn-navy sm" disabled={!e.titulo.trim() || !e.fecha || enviando}>Agregar al calendario</button></div>
       <ul className="admin-list">
         {!eventos.length && <li className="muted small">No hay próximos eventos.</li>}
